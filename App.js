@@ -1,33 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState, useEffect } from "react";
-import tw from 'twrnc';
-import Navbar from './components/Navbar';
-import AppLoading from 'expo-app-loading';
-import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
+import React from "react";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import PageA from './pages/PageA';
+import PageB from './pages/PageB';
+import PageC from './pages/PageC';
+import PageD from './pages/PageD';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
-    Raleway_100Thin,
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   return (
-    <View style={styles.mainContainer}>
-      <Navbar></Navbar>
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={PageA} options={{headerShown: false}}/>
+        <Tab.Screen name="Cashflow" component={PageB} options={{headerShown: false}}/>
+        <Tab.Screen name="Upcoming" component={PageC} options={{headerShown: false}}/>
+        <Tab.Screen name="Configure" component={PageD} options={{headerShown: false}}/>
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-
-  },
-  body: {
-    paddingTop: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
