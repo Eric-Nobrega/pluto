@@ -1,27 +1,33 @@
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Modal } from 'react-native';
 import React, { useState } from "react";
 import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
 import Navbar from '../components/Navbar';
 import uuid from 'react-native-uuid';
-
+import HouseList from '../components/HouseList';
+import CustomButton from '../components/CustomButton';
 
 export default function App() {
-    // State
-    // Item Object
+    // State Management
+    // Property Item Object
     const [houseItem, setHouseItem] = useState({
-        id: uuid.v4(),
-        name: "",
-        postCode: "",
+        houseID: uuid.v4(),
+        houseName: "",
+        housePostCode: "",
         rentalIncome: "",
         mortgageRepayment: "",
     });
 
-    // item list
+    // Property Item List
     const [houseItems, setHouseItems] = useState([]);
 
+    // Modal Open/Close State
+    const [modalOpen, setModalOpen] = useState(false);
+
+    // Add Property Function
     function addItem() {
+        setModalOpen(false);
         const newItem = {
             houseID: houseItem.id,
             houseName: houseItem.name,
@@ -36,60 +42,68 @@ export default function App() {
     return (
         <View style={styles.mainContainer}>
             <Navbar></Navbar>
-            <View style={styles.body}>
-                <Text style={{ fontFamily: 'Raleway_100Thin', fontSize: 28 }}>Configure</Text>
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Property Street Address"
-                    onChangeText={newText => setHouseItem({ ...houseItem, name: newText })}
-                    value={houseItem.name}
-                />
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Property Post Code"
-                    onChangeText={newText => setHouseItem({ ...houseItem, postCode: newText })}
-                    value={houseItem.postCode}
-                />
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Property Rental Income"
-                    onChangeText={newText => setHouseItem({ ...houseItem, rentalIncome: newText })}
-                    value={houseItem.rentalIncome}
-                />
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Property Mortgage Repayment"
-                    onChangeText={newText => setHouseItem({ ...houseItem, mortgageRepayment: newText })}
-                    value={houseItem.mortgageRepayment}
-                />
-                <Button title="Create New Property" onPress={() => addItem()} ></Button>
-            </View>
-            <Text>Current Property Name: {houseItem.name}</Text>
-            <Text>Current Property Post Code: {houseItem.postCode}</Text>
-            <Text>Current Property Rent: {houseItem.rentalIncome}</Text>
-            <Text>Current Property Mortgage: {houseItem.mortgageRepayment}</Text>
-            {houseItems.map((item) => {
-                return (
-                    <View key={item.houseID}>
-                        <Text>{item.houseName}</Text>
-                        <Text>{item.housePostCode}</Text>
-                        <Text>{item.rentalIncome}</Text>
-                        <Text>{item.mortgageRepayment}</Text>
+            <View>
+                <Modal visible={modalOpen}>
+                    <View style={styles.modalContent}>
+                        <Text>Hello From The Modal!</Text>
+                        <Button onPress={() => addItem()} title="Add New Property"></Button>
+                        <TextInput
+                            style={{ height: 40 }}
+                            placeholder="Property Street Address"
+                            onChangeText={newText => setHouseItem({ ...houseItem, name: newText })}
+                            value={houseItem.name}
+                        />
+                        <TextInput
+                            style={{ height: 40 }}
+                            placeholder="Property Post Code"
+                            onChangeText={newText => setHouseItem({ ...houseItem, postCode: newText })}
+                            value={houseItem.postCode}
+                        />
+                        <TextInput
+                            style={{ height: 40 }}
+                            placeholder="Property Rental Income"
+                            onChangeText={newText => setHouseItem({ ...houseItem, rentalIncome: newText })}
+                            value={houseItem.rentalIncome}
+                        />
+                        <TextInput
+                            style={{ height: 40 }}
+                            placeholder="Property Mortgage Repayment"
+                            onChangeText={newText => setHouseItem({ ...houseItem, mortgageRepayment: newText })}
+                            value={houseItem.mortgageRepayment}
+                        />
                     </View>
-                )
-            })
-            }
+                </Modal>
+            </View>
+            {/*Pass Through HouseItems, Handle Delete Method, Handle Edit Method*/}
+            <HouseList houseItems={houseItems}></HouseList>
+            <View style={styles.stickyButton} >
+                <CustomButton onPress={() => { setModalOpen(true) }}></CustomButton>
+            </View>
         </View>
     );
 }
 
+// Stylesheet
 const styles = StyleSheet.create({
     mainContainer: {
-
+        height: "100%",
     },
-    body: {
+    modalContent: {
         paddingTop: "50%",
         justifyContent: "center",
         alignItems: "center",
     },
+    addButton: {
+        borderWidth: 1,
+        borderColor: "black",
+        borderStyle: "solid",
+        backgroundColor: "yellow"
+    },
+    stickyButton: {
+        position: "absolute",
+        right: 10,
+        bottom: 10,
+        padding: 15,
+    }
 });
+
