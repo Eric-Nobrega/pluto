@@ -17,7 +17,7 @@ export default function App() {
         <View style={styles.mainContainer}>
             <Navbar></Navbar>
             <View style={styles.body}>
-                <Text style={{ fontFamily: 'Raleway_100Thin', fontSize: 28 }}>Page B</Text>
+                <Text style={{ fontFamily: 'Raleway_100Thin', fontSize: 28 }}>Cashflow</Text>
             </View>
         </View>
     );

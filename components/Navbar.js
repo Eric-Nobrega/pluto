@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
-import { useFonts, Raleway_100Thin, Raleway_400Regular } from '@expo-google-fonts/raleway';
+import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
 
 // Date Variables
 const dateObj = new Date();
@@ -13,7 +13,8 @@ const newdate = day + "/" + month + "/" + year;
 export default function Navbar() {
     let [fontsLoaded] = useFonts({
         Raleway_100Thin,
-        Raleway_400Regular
+        Raleway_400Regular,
+        Raleway_700Bold
     });
 
     if (!fontsLoaded) {
@@ -22,9 +23,9 @@ export default function Navbar() {
     return (
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 21 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 21 }]}>{newdate}</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 21 }]}>Account</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_700Bold', fontSize: 28 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 18 }]}>{newdate}</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 18 }]}>Account</Text>
             </View>
         </View>
     );

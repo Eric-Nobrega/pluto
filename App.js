@@ -1,10 +1,10 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import PageA from './pages/PageA';
-import PageB from './pages/PageB';
-import PageC from './pages/PageC';
-import PageD from './pages/PageD';
+import PageA from './pages/Homepage';
+import PageB from './pages/Cashflow';
+import PageC from './pages/Upcoming';
+import PageD from './pages/Configure';
 
 const Tab = createBottomTabNavigator();
 
