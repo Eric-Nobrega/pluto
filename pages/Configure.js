@@ -28,15 +28,27 @@ export default function App() {
     // Add Property Function
     function addItem() {
         setModalOpen(false);
-        const newItem = {
-            houseID: houseItem.id,
-            houseName: houseItem.name,
-            housePostCode: houseItem.postCode,
-            rentalIncome: houseItem.rentalIncome,
-            mortgageRepayment: houseItem.mortgageRepayment,
-        };
-        setHouseItems([...houseItems, newItem])
-        setHouseItem(houseItem.id = uuid.v4(), houseItem.name = "", houseItem.postCode = "", houseItem.rentalIncome = "", houseItem.mortgageRepayment = "")
+        setHouseItems([...houseItems, houseItem])
+        setHouseItem({
+            houseID: uuid.v4(),
+            houseName: "",
+            housePostCode: "",
+            rentalIncome: "",
+            mortgageRepayment: "",
+        })
+    }
+
+    // Custom Property Modal Open/Close State
+    const [propModalOpen, setPropModalOpen] = useState(false);
+
+    // Custom Property State
+    const [customProp, setCustomProp] = useState("");
+
+    // Add Custom Property Function
+    function addNewProps() {
+        setPropModalOpen(false);
+        houseItem[customProp] = "";
+        setCustomProp("");
     }
 
     return (
@@ -45,41 +57,42 @@ export default function App() {
             <View>
                 <Modal visible={modalOpen}>
                     <View style={styles.modalContent}>
-                        <Text>Hello From The Modal!</Text>
-                        <Button onPress={() => addItem()} title="Add New Property"></Button>
-                        <TextInput
-                            style={{ height: 40 }}
-                            placeholder="Property Street Address"
-                            onChangeText={newText => setHouseItem({ ...houseItem, name: newText })}
-                            value={houseItem.name}
-                        />
-                        <TextInput
-                            style={{ height: 40 }}
-                            placeholder="Property Post Code"
-                            onChangeText={newText => setHouseItem({ ...houseItem, postCode: newText })}
-                            value={houseItem.postCode}
-                        />
-                        <TextInput
-                            style={{ height: 40 }}
-                            placeholder="Property Rental Income"
-                            onChangeText={newText => setHouseItem({ ...houseItem, rentalIncome: newText })}
-                            value={houseItem.rentalIncome}
-                        />
-                        <TextInput
-                            style={{ height: 40 }}
-                            placeholder="Property Mortgage Repayment"
-                            onChangeText={newText => setHouseItem({ ...houseItem, mortgageRepayment: newText })}
-                            value={houseItem.mortgageRepayment}
-                        />
+                        <Text>Add New Property</Text>
+                        {Object.keys(houseItem).map((key) => {
+                            return (
+                                <TextInput placeholder={key} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]}></TextInput>
+                            )
+                        })}
                     </View>
+                    <Button title="Cancel" onPress={() => {
+                        setModalOpen(false); (false)
+                    }}></Button>
+                    <Button onPress={() => addItem()} title="Confirm"></Button>
+                    <Button title="Add Custom Event" onPress={() => {
+                        setPropModalOpen(true)
+                    }}></Button>
+                    <Modal visible={propModalOpen}>
+                        <View style={styles.modalContent}>
+                            <Text>Custom Property Event</Text>
+                            <TextInput
+                                style={{ height: 40 }}
+                                placeholder="Add New Event"
+                                onChangeText={newText => setCustomProp(newText)}
+                                value={customProp}
+                            />
+                            <Button title="Add" onPress={() => {
+                                addNewProps();
+                            }}></Button>
+                        </View>
+                    </Modal>
                 </Modal>
-            </View>
+            </View >
             {/*Pass Through HouseItems, Handle Delete Method, Handle Edit Method*/}
-            <HouseList houseItems={houseItems}></HouseList>
+            < HouseList houseItems={houseItems} ></HouseList >
             <View style={styles.stickyButton} >
                 <CustomButton onPress={() => { setModalOpen(true) }}></CustomButton>
             </View>
-        </View>
+        </View >
     );
 }
 

@@ -23,9 +23,9 @@ export default function Navbar() {
     return (
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_700Bold', fontSize: 28 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 18 }]}>{newdate}</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 18 }]}>Account</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 20 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 25 }]}>{newdate}</Text>
+                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 20 }]}>Account</Text>
             </View>
         </View>
     );

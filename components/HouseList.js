@@ -1,8 +1,9 @@
 import HouseItem from "./HouseItem";
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function HouseList(props) {
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.body}>

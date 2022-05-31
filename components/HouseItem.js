@@ -23,6 +23,7 @@ export default function HouseItem(props) {
 
 const styles = StyleSheet.create({
     mainContainer: {
+        color: "black",
         margin: 10,
         height: 50,
         borderColor: "black",
