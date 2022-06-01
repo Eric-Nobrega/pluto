@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import uuid from 'react-native-uuid';
 import HouseList from '../components/HouseList';
 import CustomButton from '../components/CustomButton';
+import StyledButton from '../components/StyledButton';
 
 export default function App() {
     // State Management
@@ -51,31 +52,64 @@ export default function App() {
         setCustomProp("");
     }
 
+    // Handle Remove Property Function
+    const handleDelete = (id) => {
+        const filteredArray = houseItems.filter((item) => item.houseID !== id);
+        setHouseItems(filteredArray);
+    };
+
     return (
         <View style={styles.mainContainer}>
             <Navbar></Navbar>
             <View>
                 <Modal visible={modalOpen}>
+                    <Text style={{ fontFamily: 'Raleway_400Regular', fontSize: 20, padding: 15, paddingTop: 50, backgroundColor: "#0077FF", color: "white", textAlign: "center" }}>Add New Property</Text>
                     <View style={styles.modalContent}>
-                        <Text>Add New Property</Text>
                         {Object.keys(houseItem).map((key) => {
-                            return (
-                                <TextInput placeholder={key} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]}></TextInput>
-                            )
+                            {
+                                let formattedName = key;
+                                if (key == "houseName") {
+                                    formattedName = "Street Address"
+                                }
+                                if (key == "housePostCode") {
+                                    formattedName = "Property Post Code"
+                                }
+                                if (key == "rentalIncome") {
+                                    formattedName = "Rental Income (Monthly)"
+                                }
+                                if (key == "mortgageRepayment") {
+                                    formattedName = "Mortgage Payment (Monthly)"
+                                }
+                                if (key !== "houseID" && key !== "houseName" && key !== "housePostCode" && key !== "rentalIncome" && key !== "mortgageRepayment") {
+                                    return (<View style={styles.test}>
+                                        <TextInput placeholder={key + " Renewal Date"} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
+                                    </View>)
+                                }
+                                if (key !== "houseID") {
+                                    return (<View style={styles.test}>
+                                        <TextInput placeholder={formattedName} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
+                                    </View>)
+                                }
+                            }
                         })}
                     </View>
-                    <Button title="Cancel" onPress={() => {
-                        setModalOpen(false); (false)
-                    }}></Button>
-                    <Button onPress={() => addItem()} title="Confirm"></Button>
-                    <Button title="Add Custom Event" onPress={() => {
-                        setPropModalOpen(true)
-                    }}></Button>
+                    <View style={styles.bottomButtons}>
+                        <StyledButton title="Cancel" onPress={() => {
+                            setModalOpen(false);
+                        }}></StyledButton>
+                        <StyledButton title="Create Event" onPress={() => {
+                            setPropModalOpen(true)
+                        }}></StyledButton>
+                        <StyledButton onPress={() => addItem()} title="Create Property"></StyledButton>
+                    </View>
                     <Modal visible={propModalOpen}>
                         <View style={styles.modalContent}>
                             <Text>Custom Property Event</Text>
                             <TextInput
-                                style={{ height: 40 }}
+                                style={{
+                                    height: 40, borderBottomColor: 'red',
+                                    borderBottomWidth: 2,
+                                }}
                                 placeholder="Add New Event"
                                 onChangeText={newText => setCustomProp(newText)}
                                 value={customProp}
@@ -88,7 +122,7 @@ export default function App() {
                 </Modal>
             </View >
             {/*Pass Through HouseItems, Handle Delete Method, Handle Edit Method*/}
-            < HouseList houseItems={houseItems} ></HouseList >
+            <HouseList houseItems={houseItems} handleDelete={handleDelete} ></HouseList >
             <View style={styles.stickyButton} >
                 <CustomButton onPress={() => { setModalOpen(true) }}></CustomButton>
             </View>
@@ -102,9 +136,8 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     modalContent: {
-        paddingTop: "50%",
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     addButton: {
         borderWidth: 1,
@@ -117,6 +150,21 @@ const styles = StyleSheet.create({
         right: 10,
         bottom: 10,
         padding: 15,
+    },
+    bottomButtons: {
+
+    },
+    test: {
+        alignSelf: 'stretch',
+        margin: 10,
+        padding: 5,
+    },
+    testText: {
+        fontSize: 18,
+        fontFamily: 'Raleway_400Regular',
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'gray',
+        paddingBottom: 5,
     }
 });
 

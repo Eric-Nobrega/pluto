@@ -9,11 +9,14 @@ export default function HouseList(props) {
             <View style={styles.body}>
                 {props.houseItems.map((item) => {
                     return (
-                        <HouseItem key={item.houseID}
+                        <HouseItem houseID={item.houseID}
                             houseName={item.houseName}
                             housePostCode={item.housePostCode}
                             rentalIncome={item.rentalIncome}
-                            mortgageRepayment={item.mortgageRepayment} />
+                            mortgageRepayment={item.mortgageRepayment}
+                            handleDelete={() => {
+                                props.handleDelete(item.houseID);
+                              }} />
                     )
                 })}
             </View>

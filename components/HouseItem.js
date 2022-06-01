@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import React, { useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
-import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold, Raleway_600SemiBold} from '@expo-google-fonts/raleway';
+import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold, Raleway_600SemiBold } from '@expo-google-fonts/raleway';
 import tw from 'twrnc';
+import ConfirmButton from './ConfirmButton';
 
 export default function HouseItem(props) {
     return (
@@ -12,11 +13,12 @@ export default function HouseItem(props) {
                     <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16 }}>{props.houseName}</Text>
                     <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
                 </View>
-                <View>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_600SemiBold', fontSize: 16 }}>Edit Property</Text>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_600SemiBold', fontSize: 16, marginTop: 4 }}>Remove</Text></View>
+                <View style={styles.bodyRight}>
+                    <ConfirmButton title="Edit Property" style={styles.button} onPress={() => { props.handleDelete(props.houseID) }} />
+                    <ConfirmButton title="Delete" onPress={() => { props.handleDelete(props.houseID) }} />
+                </View>
+                <View style={styles.bottomBorder}></View>
             </View>
-            <View style={styles.bottomBorder}></View>
         </View>
     );
 }
@@ -49,6 +51,12 @@ const styles = StyleSheet.create({
     bottomBorder: {
         height: 3,
         backgroundColor: "#0077FF",
+    },
+    bodyRight: {
+        marginLeft: "auto",
+    },
+    button: {
+        color: "black",
     }
 
 });
