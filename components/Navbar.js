@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import tw from 'twrnc';
+import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
 
@@ -23,9 +24,9 @@ export default function Navbar() {
     return (
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 20 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 25 }]}>{newdate}</Text>
-                <Text style={[tw`mx-5 text-xl`, {fontFamily: 'Raleway_400Regular', fontSize: 20 }]}>Account</Text>
+                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
+                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 25 }]}>{newdate}</Text>
+                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20 }]}>Account</Text>
             </View>
         </View>
     );
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 1,
         },
-        shadowOpacity: 0.22,
+        shadowOpacity: 0.15,
         shadowRadius: 2.22,
         elevation: 3,
         alignSelf: 'stretch',
