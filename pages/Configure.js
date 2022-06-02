@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, Button, Modal } from 'react-native';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
@@ -8,8 +8,27 @@ import uuid from 'react-native-uuid';
 import HouseList from '../components/HouseList';
 import CustomButton from '../components/CustomButton';
 import StyledButton from '../components/StyledButton';
+import db from '../firebase';
 
 export default function App() {
+    useEffect(() => {
+        // Create a reference to the cities collection
+        db.collection("properties")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.data().houseItems)
+                    setHouseItems(doc.data().houseItems)
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+    }, []);
+
+    // Firestore User Property List Reference
+    var propertyRef = db.collection("properties");
     // State Management
     // Property Item Object
     const [houseItem, setHouseItem] = useState({
@@ -22,6 +41,9 @@ export default function App() {
 
     // Property Item List
     const [houseItems, setHouseItems] = useState([]);
+
+    console.log("House Items")
+    console.log(houseItems)
 
     // Modal Open/Close State
     const [modalOpen, setModalOpen] = useState(false);
@@ -37,6 +59,8 @@ export default function App() {
             rentalIncome: "",
             mortgageRepayment: "",
         })
+        // Push the houseItems array to the database
+        propertyRef.doc("houseList").set({ houseItems })
     }
 
     // Custom Property Modal Open/Close State
@@ -57,6 +81,7 @@ export default function App() {
         const filteredArray = houseItems.filter((item) => item.houseID !== id);
         setHouseItems(filteredArray);
     };
+
 
     return (
         <View style={styles.mainContainer}>
