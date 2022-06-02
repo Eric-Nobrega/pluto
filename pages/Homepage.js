@@ -7,8 +7,25 @@ import Navbar from '../components/Navbar';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import db from '../firebase';
 import { set } from 'react-native-reanimated';
+import HouseList from '../components/HouseList';
 
 export default function App() {
+    // Property Item List
+    const [houseItems, setHouseItems] = useState([]);
+    useEffect(() => {
+        // Create a reference to the cities collection
+        db.collection("properties")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    setHouseItems(doc.data().houseItems)
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+    }, []);
     let [fontsLoaded] = useFonts({
         Raleway_100Thin,
     });
@@ -27,6 +44,7 @@ export default function App() {
                 </View>
                 <View style={styles.calendar}>
                     <Calendar style={{ borderRadius: "10px" }}></Calendar>
+                    <HouseList houseItems={houseItems} />
                 </View>
             </View>
         </View>
