@@ -17,7 +17,7 @@ export default function App() {
         return <AppLoading />;
     }
     return (
-        <View>
+        <View style={styles.test}>
             <Navbar></Navbar>
             <View>
                 <View style={styles.body}>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center",
-        marginBottom: 15,
+        marginBottom: 5,
         overflow: "hidden",
     },
     networth: {
@@ -55,26 +55,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 10,
         paddingRight: 10,
-        paddingTop: 10,
+        paddingTop: 12,
+        marginTop: -5,
     },
     networthText: {
         fontFamily: "Raleway_400Regular",
+        fontSize: 16,
     },
     calendar: {
-        margin: 15,
-        marginTop: 0,
-        borderColor: "gray",
-        borderWidth: 0.2,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.01,
-        shadowRadius: 2.22,
-        elevation: 3,
-        alignSelf: 'stretch',
-        backgroundColor: 'white',
         padding: 5,
+    },
+    test: {
+        backgroundColor: 'white',
+        height: "100%",
     }
 });
