@@ -4,21 +4,49 @@ import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
 import Navbar from '../components/Navbar';
+import db from '../firebase';
+import HouseList from '../components/HouseList';
+import CashflowList from '../components/CashflowList';
 
 export default function App() {
-    let [fontsLoaded] = useFonts({
-        Raleway_100Thin,
-    });
+    // Property Item List
+    const [houseItems, setHouseItems] = useState([]);
+    const [totalCashflow, setTotalCashflow] = useState(0);
 
-    if (!fontsLoaded) {
-        return <AppLoading />;
+    function calcCashflow() {
+        var total = 0;
+        houseItems.forEach(function (item) {
+            total += item.profit;
+        });
+        setTotalCashflow(total);
     }
+
+    useEffect(() => {
+        // Create a reference to the cities collection
+        db.collection("properties")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    setHouseItems(doc.data().houseItems)
+                    calcCashflow()
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+
+    }, []);
+
     return (
         <View style={styles.mainContainer}>
             <Navbar></Navbar>
             <View style={styles.body}>
-                <Text style={{ fontFamily: 'Raleway_100Thin', fontSize: 28 }}>Cashflow</Text>
+                <View style={styles.networth}>
+                    <Text style={styles.networthText}>Total Cashflow: +<Text style={{ color: "green", fontFamily: "Raleway_700Bold" }}>{totalCashflow}</Text></Text>
+                </View>
             </View>
+            <CashflowList houseItems={houseItems} />
         </View>
     );
 }
@@ -28,8 +56,31 @@ const styles = StyleSheet.create({
 
     },
     body: {
-        paddingTop: "50%",
+        display: "flex",
+        flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
+        alignContent: "center",
+        marginBottom: 5,
+        overflow: "hidden",
+    },
+    networthText: {
+        fontFamily: "Raleway_400Regular",
+        fontSize: 16,
+    },
+    networth: {
+        borderColor: "gray",
+        borderWidth: 0.2,
+        borderRadius: 3,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+        alignSelf: 'stretch',
+        height: 40,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 12,
+        marginTop: -5,
     },
 });

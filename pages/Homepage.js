@@ -44,7 +44,6 @@ export default function App() {
                 </View>
                 <View style={styles.calendar}>
                     <Calendar style={{ borderRadius: "10px" }}></Calendar>
-                    <HouseList houseItems={houseItems} />
                 </View>
             </View>
         </View>
@@ -84,7 +83,6 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     test: {
-        backgroundColor: 'white',
         height: "100%",
     }
 });

@@ -5,20 +5,20 @@ import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold, Raleway
 import tw from 'twrnc';
 import ConfirmButton from './ConfirmButton';
 
-export default function HouseItem(props) {
+export default function HouseItemCS(props) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
                     <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16 }}>{props.houseName}</Text>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
+                    <Text style={{ color: "black", fontFamily: 'Raleway_400Regular' }}>Rental Income: £{props.rentalIncome}</Text>
+                    <Text style={{ color: "black", fontFamily: 'Raleway_400Regular' }}>Mortgage Payment: £{props.mortgageRepayment}</Text>
                 </View>
                 <View style={styles.bodyRight}>
-                    <ConfirmButton title="Edit Property" style={styles.button} onPress={() => { props.handleDelete(props.houseID) }} />
-                    <ConfirmButton title="Delete" onPress={() => { props.handleDelete(props.houseID) }} />
+                    <Text style={{ color: "green", fontWeight: "bold", textAlign: "center" }}>+{props.profit}</Text>
                 </View>
             </View>
-            <View style={styles.bottomBorder}></View>
+            <View style={styles.bottomBorder}><Text></Text></View>
         </View>
     );
 }
@@ -54,9 +54,23 @@ const styles = StyleSheet.create({
     },
     bodyRight: {
         marginLeft: "auto",
+        backgroundColor: "white",
+        height: "25%",
+        width: "15%",
+        borderRadius: 5,
+        borderColor: "black",
+        borderWidth: 0.2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
     },
     button: {
-        color: "red",
-    }
+        color: "black",
+    },
 
 });

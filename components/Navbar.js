@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingTop: 48,
-        fontFamily: "sans-serif",
     }
 });
 

@@ -51,6 +51,7 @@ export default function App() {
     // Add Property Function
     function addItem() {
         setModalOpen(false);
+        houseItem["profit"] = houseItem.rentalIncome - houseItem.mortgageRepayment;
         setHouseItems([...houseItems, houseItem])
         setHouseItem({
             houseID: uuid.v4(),
