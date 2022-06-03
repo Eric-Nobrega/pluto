@@ -10,8 +10,8 @@ export default function HouseItem(props) {
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16 }}>{props.houseName}</Text>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
+                    <Text style={{ fontSize: "20px", fontFamily: 'Corbel', fontSize: 16 }}>{props.houseName}</Text>
+                    <Text style={{ fontSize: "20px", fontFamily: 'Corbel', fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
                 </View>
                 <View style={styles.bodyRight}>
                     <ConfirmButton title="Edit Property" style={styles.button} onPress={() => { props.handleDelete(props.houseID) }} />
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     },
     bodyRight: {
         marginLeft: "auto",
+        fontFamily: 'Corbel',
     },
     button: {
         color: "red",

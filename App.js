@@ -1,11 +1,14 @@
 import React from "react";
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PageA from './pages/Homepage';
 import PageB from './pages/Cashflow';
 import PageC from './pages/Upcoming';
 import PageD from './pages/Configure';
 import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'react-native';
+import {
+  NavigationContainer,
+} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 

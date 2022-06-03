@@ -3,13 +3,14 @@ import tw from 'twrnc';
 import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
+import { Ionicons } from '@expo/vector-icons';
 
 // Date Variables
 const dateObj = new Date();
 const month = dateObj.getUTCMonth() + 1;
 const day = dateObj.getUTCDate();
 const year = dateObj.getUTCFullYear();
-const newdate = day + "/" + month + "/" + year;
+const newdate = "3rd June 2022"
 
 export default function Navbar() {
     let [fontsLoaded] = useFonts({
@@ -25,8 +26,8 @@ export default function Navbar() {
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
                 <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20 }]}><Text style={tw`text-blue-500`}>p</Text>Luto</Text>
-                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 25 }]}>{newdate}</Text>
-                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20 }]}>Account</Text>
+                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20 }]}>{newdate}</Text>
+                <Text style={[tw`mx-5 text-xl`, { fontFamily: 'Raleway_400Regular', fontSize: 20, paddingTop: 3, }]}> <Ionicons name="person-circle-outline" size={30} /></Text>
             </View>
         </View>
     );
@@ -56,6 +57,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         paddingTop: 48,
+        paddingLeft: 10,
+        paddingRight: 10,
     }
 });
 

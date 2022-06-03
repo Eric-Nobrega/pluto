@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Button, Modal } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Modal, ScrollView} from 'react-native';
 import React, { useState, useEffect } from "react";
 import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
@@ -85,74 +85,76 @@ export default function App() {
 
 
     return (
-        <View style={styles.mainContainer}>
-            <Navbar></Navbar>
-            <View>
-                <Modal visible={modalOpen}>
-                    <Text style={{ fontFamily: 'Raleway_400Regular', fontSize: 20, padding: 15, paddingTop: 50, backgroundColor: "#0077FF", color: "white", textAlign: "center" }}>Add New Property</Text>
-                    <View style={styles.modalContent}>
-                        {Object.keys(houseItem).map((key) => {
-                            {
-                                let formattedName = key;
-                                if (key == "houseName") {
-                                    formattedName = "Street Address"
-                                }
-                                if (key == "housePostCode") {
-                                    formattedName = "Property Post Code"
-                                }
-                                if (key == "rentalIncome") {
-                                    formattedName = "Rental Income (Monthly)"
-                                }
-                                if (key == "mortgageRepayment") {
-                                    formattedName = "Mortgage Payment (Monthly)"
-                                }
-                                if (key !== "houseID" && key !== "houseName" && key !== "housePostCode" && key !== "rentalIncome" && key !== "mortgageRepayment") {
-                                    return (<View style={styles.test}>
-                                        <TextInput placeholder={key + " Renewal Date"} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
-                                    </View>)
-                                }
-                                if (key !== "houseID") {
-                                    return (<View style={styles.test}>
-                                        <TextInput placeholder={formattedName} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
-                                    </View>)
-                                }
-                            }
-                        })}
-                    </View>
-                    <View style={styles.bottomButtons}>
-                        <StyledButton title="Cancel" onPress={() => {
-                            setModalOpen(false);
-                        }}></StyledButton>
-                        <StyledButton title="Create Event" onPress={() => {
-                            setPropModalOpen(true)
-                        }}></StyledButton>
-                        <StyledButton onPress={() => addItem()} title="Create Property"></StyledButton>
-                    </View>
-                    <Modal visible={propModalOpen}>
+        <ScrollView>
+            <View style={styles.mainContainer}>
+                <Navbar></Navbar>
+                <View>
+                    <Modal visible={modalOpen}>
+                        <Text style={{ fontFamily: 'Raleway_400Regular', fontSize: 20, padding: 15, paddingTop: 50, backgroundColor: "#0077FF", color: "white", textAlign: "center" }}>Add New Property</Text>
                         <View style={styles.modalContent}>
-                            <Text>Custom Property Event</Text>
-                            <TextInput
-                                style={{
-                                    height: 40, borderBottomColor: 'red',
-                                    borderBottomWidth: 2,
-                                }}
-                                placeholder="Add New Event"
-                                onChangeText={newText => setCustomProp(newText)}
-                                value={customProp}
-                            />
-                            <Button title="Add" onPress={() => {
-                                addNewProps();
-                            }}></Button>
+                            {Object.keys(houseItem).map((key) => {
+                                {
+                                    let formattedName = key;
+                                    if (key == "houseName") {
+                                        formattedName = "Street Address"
+                                    }
+                                    if (key == "housePostCode") {
+                                        formattedName = "Property Post Code"
+                                    }
+                                    if (key == "rentalIncome") {
+                                        formattedName = "Rental Income (Monthly)"
+                                    }
+                                    if (key == "mortgageRepayment") {
+                                        formattedName = "Mortgage Payment (Monthly)"
+                                    }
+                                    if (key !== "houseID" && key !== "houseName" && key !== "housePostCode" && key !== "rentalIncome" && key !== "mortgageRepayment") {
+                                        return (<View style={styles.test}>
+                                            <TextInput placeholder={key + " Renewal Date"} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
+                                        </View>)
+                                    }
+                                    if (key !== "houseID") {
+                                        return (<View style={styles.test}>
+                                            <TextInput placeholder={formattedName} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
+                                        </View>)
+                                    }
+                                }
+                            })}
                         </View>
+                        <View style={styles.bottomButtons}>
+                            <StyledButton title="Cancel" onPress={() => {
+                                setModalOpen(false);
+                            }}></StyledButton>
+                            <StyledButton title="Create Event" onPress={() => {
+                                setPropModalOpen(true)
+                            }}></StyledButton>
+                            <StyledButton onPress={() => addItem()} title="Create Property"></StyledButton>
+                        </View>
+                        <Modal visible={propModalOpen}>
+                            <View style={styles.modalContent}>
+                                <Text>Custom Property Event</Text>
+                                <TextInput
+                                    style={{
+                                        height: 40, borderBottomColor: 'red',
+                                        borderBottomWidth: 2,
+                                    }}
+                                    placeholder="Add New Event"
+                                    onChangeText={newText => setCustomProp(newText)}
+                                    value={customProp}
+                                />
+                                <Button title="Add" onPress={() => {
+                                    addNewProps();
+                                }}></Button>
+                            </View>
+                        </Modal>
                     </Modal>
-                </Modal>
+                </View >
+                {/*Pass Through HouseItems, Handle Delete Method, Handle Edit Method*/}
+                <HouseList houseItems={houseItems} handleDelete={handleDelete} ></HouseList >
+                <View style={styles.stickyButton} >
+                    <CustomButton onPress={() => { setModalOpen(true) }}></CustomButton>
+                </View>
             </View >
-            {/*Pass Through HouseItems, Handle Delete Method, Handle Edit Method*/}
-            <HouseList houseItems={houseItems} handleDelete={handleDelete} ></HouseList >
-            <View style={styles.stickyButton} >
-                <CustomButton onPress={() => { setModalOpen(true) }}></CustomButton>
-            </View>
-        </View >
+        </ScrollView>
     );
 }
 

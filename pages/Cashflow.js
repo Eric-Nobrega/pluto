@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useState, useEffect } from "react";
 import tw from 'twrnc';
 import AppLoading from 'expo-app-loading';
@@ -39,15 +39,17 @@ export default function App() {
     }, []);
 
     return (
-        <View style={styles.mainContainer}>
-            <Navbar></Navbar>
-            <View style={styles.body}>
-                <View style={styles.networth}>
-                    <Text style={styles.networthText}>Total Cashflow: +<Text style={{ color: "green", fontFamily: "Raleway_700Bold" }}>{totalCashflow}</Text></Text>
+        <ScrollView>
+            <View style={styles.mainContainer}>
+                <Navbar></Navbar>
+                <View style={styles.body}>
+                    <View style={styles.networth}>
+                        <Text style={styles.networthText}>Total Cashflow (Monthly): <Text style={{ color: "green", fontFamily: "Corbel", fontWeight: "500" }}>+£{totalCashflow}</Text></Text>
+                    </View>
                 </View>
+                <CashflowList houseItems={houseItems} />
             </View>
-            <CashflowList houseItems={houseItems} />
-        </View>
+        </ScrollView>
     );
 }
 
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
     networthText: {
-        fontFamily: "Raleway_400Regular",
+        fontFamily: "Corbel",
         fontSize: 16,
     },
     networth: {

@@ -8,6 +8,7 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import db from '../firebase';
 import { set } from 'react-native-reanimated';
 import HouseList from '../components/HouseList';
+import CashflowList from '../components/CashflowList';
 
 export default function App() {
     // Property Item List
@@ -38,12 +39,10 @@ export default function App() {
             <Navbar></Navbar>
             <View>
                 <View style={styles.body}>
-                    <View style={styles.networth}>
-                        <Text style={styles.networthText}> Portfolio Value: $546,235.64</Text>
-                    </View>
                 </View>
                 <View style={styles.calendar}>
-                    <Calendar style={{ borderRadius: "10px" }}></Calendar>
+                    <Calendar />
+                    <CashflowList houseItems={houseItems} />
                 </View>
             </View>
         </View>
@@ -56,7 +55,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center",
-        marginBottom: 5,
         overflow: "hidden",
     },
     networth: {
@@ -72,15 +70,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 10,
         paddingRight: 10,
-        paddingTop: 12,
+        paddingTop: 13,
         marginTop: -5,
     },
     networthText: {
-        fontFamily: "Raleway_400Regular",
-        fontSize: 16,
+        fontFamily: "Corbel",
+        fontSize: 14,
     },
     calendar: {
-        padding: 5,
+
     },
     test: {
         height: "100%",

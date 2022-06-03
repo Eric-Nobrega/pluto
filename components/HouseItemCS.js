@@ -10,12 +10,12 @@ export default function HouseItemCS(props) {
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ fontSize: "20px", fontFamily: 'Raleway_400Regular', fontSize: 16 }}>{props.houseName}</Text>
-                    <Text style={{ color: "black", fontFamily: 'Raleway_400Regular' }}>Rental Income: £{props.rentalIncome}</Text>
-                    <Text style={{ color: "black", fontFamily: 'Raleway_400Regular' }}>Mortgage Payment: £{props.mortgageRepayment}</Text>
+                    <Text style={{ fontFamily: 'Corbel', fontSize: 15, fontWeight: "500" }}>{props.houseName}</Text>
+                    <Text style={{ color: "black", fontFamily: 'Corbel', fontSize: 15 }}>Rental Income: £{props.rentalIncome}</Text>
+                    <Text style={{ color: "black", fontFamily: 'Corbel', fontSize: 15 }}>Mortgage Payment: £{props.mortgageRepayment}</Text>
                 </View>
                 <View style={styles.bodyRight}>
-                    <Text style={{ color: "green", fontWeight: "bold", textAlign: "center" }}>+{props.profit}</Text>
+                    <Text style={{ color: "green", fontWeight: "500", textAlign: "center" }}>+{props.profit}</Text>
                 </View>
             </View>
             <View style={styles.bottomBorder}><Text></Text></View>
