@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from "react";
 import tw from 'twrnc';
-import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
 import Navbar from '../components/Navbar';
 import db from '../firebase';
 import HouseList from '../components/HouseList';
 import CashflowList from '../components/CashflowList';
+import EmptyPage from "../components/EmptyPage"
 
 export default function App() {
     // Property Item List
@@ -22,6 +22,10 @@ export default function App() {
     }
 
     useEffect(() => {
+        calcCashflow()
+    }, [houseItems]);
+
+    useEffect(() => {
         // Create a reference to the cities collection
         db.collection("properties")
             .get()
@@ -29,7 +33,6 @@ export default function App() {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     setHouseItems(doc.data().houseItems)
-                    calcCashflow()
                 });
             })
             .catch((error) => {
@@ -38,24 +41,37 @@ export default function App() {
 
     }, []);
 
+    function conditionalRender() {
+        if (houseItems.length == 0) {
+            return (
+                <EmptyPage />
+            )
+        } else {
+
+        }
+    }
+
     return (
-        <ScrollView>
-            <View style={styles.mainContainer}>
-                <Navbar></Navbar>
+
+        <View style={styles.mainContainer}>
+            <Navbar></Navbar>
+            <ScrollView>
                 <View style={styles.body}>
                     <View style={styles.networth}>
-                        <Text style={styles.networthText}>Total Cashflow (Monthly): <Text style={{ color: "green", fontFamily: "Corbel", fontWeight: "500" }}>+£{totalCashflow}</Text></Text>
+                        <Text style={styles.networthText}>Monthly Cashflow: <Text style={{ color: "green", fontWeight: "500" }}>+£{totalCashflow}</Text></Text>
                     </View>
                 </View>
                 <CashflowList houseItems={houseItems} />
-            </View>
-        </ScrollView>
+                {conditionalRender()}
+            </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-
+        height: "100%",
+        backgroundColor: "white",
     },
     body: {
         display: "flex",
@@ -66,7 +82,6 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
     networthText: {
-        fontFamily: "Corbel",
         fontSize: 16,
     },
     networth: {

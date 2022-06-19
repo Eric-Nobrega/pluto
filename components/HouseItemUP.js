@@ -5,17 +5,15 @@ import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold, Raleway
 import tw from 'twrnc';
 import ConfirmButton from './ConfirmButton';
 
-export default function HouseItem(props) {
+export default function HouseItemUP({ houseName, selectedOptionDueDate }) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ fontSize: "20px",fontSize: 16 }}>{props.houseName}</Text>
-                    <Text style={{ fontSize: "20px",  fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
+                    <Text style={{ fontSize: "20px", fontSize: 16 }}>{houseName}</Text>
+                    <Text style={{ fontSize: "20px", fontSize: 16 }}>{selectedOptionDueDate}</Text>
                 </View>
                 <View style={styles.bodyRight}>
-                    <ConfirmButton title="Edit Property" style={styles.button} onPress={() => { props.handleDelete(props.houseID) }} />
-                    <ConfirmButton title="Delete" onPress={() => { props.handleDelete(props.houseID) }} />
                 </View>
             </View>
             <View style={styles.bottomBorder}></View>
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     },
     button: {
         color: "red",
+        fontWeight: "bold",
     }
 
 });

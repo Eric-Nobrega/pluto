@@ -10,9 +10,9 @@ export default function HouseItemCS(props) {
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ fontFamily: 'Corbel', fontSize: 15, fontWeight: "500" }}>{props.houseName}</Text>
-                    <Text style={{ color: "black", fontFamily: 'Corbel', fontSize: 15 }}>Rental Income: £{props.rentalIncome}</Text>
-                    <Text style={{ color: "black", fontFamily: 'Corbel', fontSize: 15 }}>Mortgage Payment: £{props.mortgageRepayment}</Text>
+                    <Text style={{fontSize: 15, fontWeight: "500" }}>{props.houseName}</Text>
+                    <Text style={{ color: "black",  fontSize: 15 }}>Rental Income: £{props.rentalIncome}</Text>
+                    <Text style={{ color: "black",  fontSize: 15 }}>Mortgage Payment: £{props.mortgageRepayment}</Text>
                 </View>
                 <View style={styles.bodyRight}>
                     <Text style={{ color: "green", fontWeight: "500", textAlign: "center" }}>+{props.profit}</Text>

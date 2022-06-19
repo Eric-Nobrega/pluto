@@ -1,11 +1,4 @@
 import * as firebase from "firebase";
-import {
-    getFirestore, collection, onSnapshot,
-    addDoc, deleteDoc, doc,
-    query, where,
-    orderBy, serverTimestamp,
-    getDoc,
-} from 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCiPfGYovt6CrqW2SURajJezVXxgm19PmU",

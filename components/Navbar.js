@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import tw from 'twrnc';
 import React, { useState, useEffect } from "react";
-import AppLoading from 'expo-app-loading';
 import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -10,7 +9,7 @@ const dateObj = new Date();
 const month = dateObj.getUTCMonth() + 1;
 const day = dateObj.getUTCDate();
 const year = dateObj.getUTCFullYear();
-const newdate = "3rd June 2022"
+const newdate = "16th June 2022"
 
 export default function Navbar() {
     let [fontsLoaded] = useFonts({
@@ -19,9 +18,6 @@ export default function Navbar() {
         Raleway_700Bold
     });
 
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    }
     return (
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
