@@ -10,12 +10,14 @@ export default function HouseItem(props) {
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ fontSize: "20px",fontSize: 16 }}>{props.houseName}</Text>
-                    <Text style={{ fontSize: "20px",  fontSize: 16, marginTop: 4 }}>{props.housePostCode}</Text>
+                    <Text style={{ fontSize: "20px", fontSize: 16, fontWeight: "600", paddingHorizontal: 2 }}>{props.houseName}</Text>
+                    <Text style={styles.test}></Text>
+                    <Text style={{ fontSize: "20px", fontSize: 14, fontWeight: "normal", paddingHorizontal: 3, paddingTop: 6 }}><Text style={{fontWeight: "500"}}>Rental Income: </Text>£1250</Text>
+                    <Text style={{ fontSize: "20px", fontSize: 14, fontWeight: "normal", paddingHorizontal: 3, paddingTop: 3, }}><Text style={{fontWeight: "500"}}>Mortgage Repayment: </Text>£650</Text>
+                    <Text style={{ fontSize: "20px", fontSize: 14, fontWeight: "normal", paddingHorizontal: 3, paddingTop: 3, }}><Text style={{fontWeight: "500"}}>Monthly Cashflow: </Text>£550</Text>
                 </View>
                 <View style={styles.bodyRight}>
-                    <ConfirmButton title="Edit Property" style={styles.button} onPress={() => { props.handleDelete(props.houseID) }} />
-                    <ConfirmButton title="Delete" onPress={() => { props.handleDelete(props.houseID) }} />
+                    <Text style={{ fontSize: "20px", fontSize: 16, paddingHorizontal: 2, fontWeight: "600", color: "#0077FF" }}>{props.housePostCode}</Text>
                 </View>
             </View>
             <View style={styles.bottomBorder}></View>
@@ -26,37 +28,49 @@ export default function HouseItem(props) {
 const styles = StyleSheet.create({
     mainContainer: {
         color: "black",
-        margin: 10,
-        height: 50,
+        marginTop: 10,
+        marginLeft: 13,
+        marginRight: 13,
+        borderRadius: 5,
+        height: 118,
+        alignSelf: 'stretch',
+        backgroundColor: 'white',
         borderColor: "black",
         borderWidth: 0.2,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 0.5,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-        alignSelf: 'stretch',
-        height: 90,
-        backgroundColor: 'white',
+        shadowOpacity: 0.12,
+        shadowRadius: 1.22,
     },
     body: {
         flex: 1,
-        padding: 7,
+        padding: 15,
         flexDirection: "row",
         justifyContent: 'space-between',
     },
     bottomBorder: {
-        height: 3,
+        height: 2,
         backgroundColor: "#0077FF",
+        opacity: 0.8,
+        borderRadius: 5,
     },
     bodyRight: {
         marginLeft: "auto",
     },
     button: {
         color: "red",
+        fontWeight: "bold",
+    },
+    test: {
+        backgroundColor: 'white',
+        borderColor: "black",
+        borderWidth: 0.2,
+        width: 315,
+        height: 1,
+        marginTop: 4
     }
 
 });

@@ -58,7 +58,7 @@ export default function App() {
             <ScrollView>
                 <View style={styles.body}>
                     <View style={styles.networth}>
-                        <Text style={styles.networthText}>Monthly Cashflow: <Text style={{ color: "green", fontWeight: "500" }}>+£{totalCashflow}</Text></Text>
+                        <Text style={styles.networthText}>Monthly Cashflow: <Text style={{ color: "green", fontWeight: "500" }}>£{totalCashflow}</Text></Text>
                     </View>
                 </View>
                 <CashflowList houseItems={houseItems} />
@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
     },
     networthText: {
         fontSize: 16,
+        fontWeight: "600"
     },
     networth: {
         borderColor: "gray",
         borderWidth: 0.2,
-        borderRadius: 3,
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
+        borderRadius: 10,
+        width: 250,
+        elevation: 1,
         alignSelf: 'stretch',
         height: 40,
         backgroundColor: 'white',

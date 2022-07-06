@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, View, TextInput, Button, Modal, ScrollView } from 'react-native';
 import React, { useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
@@ -8,11 +9,19 @@ import StyledButton from '../components/StyledButton';
 import db from '../firebase';
 import EmptyPage from "../components/EmptyPage"
 import { color } from 'react-native-reanimated';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 export default function App() {
+    const [date, setDate] = useState(new Date())
     // Firestore User Property List Reference
     //const propertyRef = doc(db, "properties", "houseList")
+
+    // initial custom event array -> set to empty array x
+    const [customEvents, setCustomEvents] = useState([])
+    // on each add event click, add event to custom event array/state x
+    // on add houseitem click, iterate through the custom event array and add each object to the houseitem object
+    // set the custom event array to default state ([])
 
     useEffect(() => {
         // Create a reference to the cities collection
@@ -32,7 +41,7 @@ export default function App() {
 
     // State Management
     // Property Item Object
-    const [houseItem, setHouseItem] = useState({
+    let [houseItem, setHouseItem] = useState({
         houseID: uuid.v4(),
         houseName: "",
         housePostCode: "",
@@ -74,20 +83,26 @@ export default function App() {
     // Custom Property State
     const [customProp, setCustomProp] = useState({
         Title: "",
-        DueDate: "",
+        DueDate: date,
         Interval: "",
     });
 
     // Add Custom Property Function
     function addNewProps() {
         setPropModalOpen(false);
-
-        houseItem[customProp] = customProp;
+        //houseItem[customProp] = customProp;
+        //customEvents.map(event => houseItem[customProp] = { ...customProp, ...event })
+        //data = {status,...res}
+        houseItem[customProp] = customEvents;
 
 
         // reset custom prop
         // houseItem[customProp] = "";
-        setCustomProp("");
+        setCustomProp({
+            Title: "",
+            DueDate: date,
+            Interval: "",
+        });
     }
 
     // Delete A Property Function
@@ -118,13 +133,16 @@ export default function App() {
         }
     }
 
+
     return (
         <View style={styles.mainContainer}>
             <Navbar></Navbar>
             <ScrollView>
                 <View>
-                    <Modal visible={modalOpen}>
-                        <Text style={{ fontFamily: 'Raleway_400Regular', fontSize: 20, padding: 15, paddingTop: 50, backgroundColor: "white", color: "#0077FF", textAlign: "center" }}>Add New Property</Text>
+                    <Modal visible={modalOpen} style={styles.modalContent}>
+                        <View style={styles.modalNavbar}>
+                            <Text style={styles.modalNavbarText}>Add New Property</Text>
+                        </View>
                         <View style={styles.modalContent}>
                             {Object.keys(houseItem).map((key) => {
                                 {
@@ -149,40 +167,46 @@ export default function App() {
                                         </View>)
                                     }
                                     */
-                                    if (key !== "houseID") {
+                                    if (key !== "houseID" && key == "houseName" || key == "housePostCode" || key == "rentalIncome" || key == "mortgageRepayment") {
                                         return (<View style={styles.test}>
                                             <TextInput placeholder={formattedName} placeholderTextColor={"gray"} onChangeText={newText => setHouseItem({ ...houseItem, [key]: newText })} value={houseItem[key]} style={styles.testText}></TextInput>
                                         </View>)
                                     }
                                 }
                             })}
-                            <View style={styles.bottomButtons}>
-                                <StyledButton title="Cancel" onPress={() => {
-                                    setModalOpen(false);
-                                }}></StyledButton>
-                                <StyledButton title="Custom Event" onPress={() => {
-                                    setPropModalOpen(true)
-                                }}></StyledButton>
-                                <StyledButton onPress={() => addItem()} title="Confirm"></StyledButton>
-                            </View>
+                            {customEvents.map((item) => {
+                                return (
+                                    <View style={styles.test}>
+                                        <TextInput value={item.Title} style={styles.testText}></TextInput>
+                                    </View>
+                                )
+                            })}
+                        </View>
+                        <View style={styles.bottomButtons}>
+                            <StyledButton title="Cancel" onPress={() => {
+                                setModalOpen(false);
+                            }}></StyledButton>
+                            <StyledButton title="Custom Event" onPress={() => {
+                                setPropModalOpen(true)
+                            }}></StyledButton>
+                            <StyledButton onPress={() =>
+                                // console.log(customEvents)
+                                addItem()
+                            } title="Confirm"></StyledButton>
                         </View>
                         <Modal visible={propModalOpen}>
                             <View style={styles.modalContent2}>
-                                <Text style={{ fontFamily: 'Raleway_400Regular', fontSize: 20, backgroundColor: "white", marginBottom: 50, color: "#0077FF", textAlign: "center" }}>Create Custom Event</Text>
+                                <Text style={styles.modalNavbar}>Create Custom Event</Text>
                                 <TextInput
                                     placeholder="Custom Event Name"
                                     placeholderTextColor={"gray"}
-                                    onChangeText={newText => setCustomProp({ ...customProp, Title: newText})}
+                                    onChangeText={newText => setCustomProp({ ...customProp, Title: newText })}
                                     value={customProp}
                                     style={styles.testText}
                                 />
-                                <TextInput
-                                    placeholder="Due Date"
-                                    placeholderTextColor={"gray"}
-                                    onChangeText={newText => setCustomProp({ ...customProp, DueDate: newText })}
-                                    value={customProp}
-                                    style={styles.testText}
-                                />
+                                <DateTimePicker style={{}} display="inline" value={date} onChange={(event, date) => {
+                                    setCustomProp({ ...customProp, DueDate: date })
+                                }} />
                                 <TextInput
                                     placeholder="Interval"
                                     placeholderTextColor={"gray"}
@@ -192,7 +216,13 @@ export default function App() {
                                 />
                                 <View style={styles.bottomButtons2}>
                                     <StyledButton title="Add" onPress={() => {
+                                        // on each add event click, add event to custom event array/state
                                         addNewProps();
+                                        setCustomEvents([...customEvents, customProp]);
+                                        console.log("Custom Events")
+                                        console.log(customEvents)
+                                        console.log("House Item")
+                                        console.log(houseItem)
                                     }}></StyledButton>
                                     <StyledButton title="Cancel" onPress={() => {
                                         setPropModalOpen(false);
@@ -220,7 +250,29 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
     modalContent: {
-        height: "auto",
+        height: "70%"
+    },
+    modalNavbar: {
+        padding: 15,
+        paddingTop: 50,
+        backgroundColor: "white",
+        color: "#0077FF",
+        borderColor: "black",
+        borderWidth: 0.2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    modalNavbarText: {
+        fontWeight: "400",
+        textAlign: "center",
+        fontSize: 20,
+        color: "#0077FF",
     },
     addButton: {
         borderWidth: 1,
@@ -232,10 +284,11 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 10,
         bottom: 10,
-        padding: 15,
+        padding: 10,
     },
     bottomButtons: {
-        bottom: -250,
+        width: "95%",
+        alignSelf: "center"
     },
     test: {
         alignSelf: 'stretch',
@@ -245,17 +298,14 @@ const styles = StyleSheet.create({
     testText: {
         fontSize: 18,
         fontFamily: 'Raleway_400Regular',
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
-        paddingBottom: 5,
         color: "black",
     },
     modalContent2: {
         paddingTop: 50,
-        padding: 15,
+        padding: 10,
     },
     bottomButtons2: {
-        bottom: -30,
+        bottom: -20,
     }
 });
 

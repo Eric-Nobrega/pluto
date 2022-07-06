@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        fontFamily: 'Raleway_400Regular',
-        color: "#0077FF"
+        color: "#0077FF",
+        fontWeight: "normal"
     },
 });

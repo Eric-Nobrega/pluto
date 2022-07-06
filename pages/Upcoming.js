@@ -1,3 +1,4 @@
+<script src="http://192.168.0.42:8097"></script>
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import React, { useState, useEffect } from "react";
 import { useFonts, Raleway_100Thin } from '@expo-google-fonts/raleway';
@@ -17,12 +18,10 @@ export default function App() {
     const [selectedOption, setSelectedOption] = useState('')
     // mapped array
     let [mappedArray, setMappedArray] = useState([])
+    let [sortedArray, setSortedArray] = useState([])
+    let [testArray, setTestArray] = useState([])
     const [selectedItem, setSelectedItem] = useState('')
-
-    function changeSelectedOption(x) {
-        setSelectedOption(x)
-        console.log("The Selected Option is: " + selectedOption)
-    }
+    var sortedAsc;
 
     // Get HouseItems From Database
     async function getData() {
@@ -44,6 +43,8 @@ export default function App() {
         houseItems.forEach(element => {
             console.log("House Name: " + element.houseName)
         });
+        console.log("houseItems")
+        console.log(houseItems)
     }
 
     function getEvents() {
@@ -53,8 +54,10 @@ export default function App() {
             // Store Keys Other Than Defaults In Array (upcomingEvents)
             for (const [key, value] of Object.entries(element)) {
                 if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
-                    console.log(value)
-                    upcomingEvents.push(value.Title)
+                    //upcomingEvents.push(element)
+                    element[key].forEach(element => {
+                        upcomingEvents.push(element.Title)
+                    });
                 }
             }
         })
@@ -62,6 +65,42 @@ export default function App() {
         const uniqueEvents = [...new Set(upcomingEvents)];
         // Set State
         setUpcomingEvents(uniqueEvents)
+    }
+
+    // Extract Individual Duedates for HouseItemUP Property
+    function getDueDate(element) {
+        for (const [key, value] of Object.entries(element)) {
+            if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                console.log("DATE")
+                console.log(new Date(value.DueDate.seconds * 1000).toLocaleDateString())
+                // value.DueDate = new Date(value.DueDate.seconds * 1000).toLocaleDateString()
+                return (new Date(value.DueDate.seconds * 1000).toLocaleDateString())
+            }
+        }
+    }
+
+    function getDate(element) {
+        let d;
+        for (const [key] of Object.entries(element)) {
+            if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                element[key].forEach(subElement => {
+                    if (subElement.Title === selectedItem) {
+                        d = new Date(subElement.DueDate.toDate());
+                    }
+                });
+            }
+        }
+        return (d.toDateString())
+    }
+
+    function getDateFunction() {
+        houseItems.forEach(element => {
+            for (const [key, value] of Object.entries(element)) {
+                if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                    //console.log(new Date(value.DueDate.seconds * 1000).toLocaleDateString())
+                }
+            }
+        })
     }
 
     useEffect(() => {
@@ -74,8 +113,10 @@ export default function App() {
         if (houseItems.length > 0) {
             getEvents()
             displaySelected()
+            //  getDateFunction()
         }
     }, [houseItems]);
+
 
     // Display The houseItems That Are Have The Currently Loaded Property
     function displaySelected() {
@@ -88,6 +129,23 @@ export default function App() {
         })
     }
 
+    function sortArray() {
+        // iterate thru the mapped array
+        mappedArray.forEach(element => {
+            for (const [key, value] of Object.entries(element)) {
+                if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                    setSortedArray(mappedArray.sort((a, b) => new Date(a[value].DueDate.toDate()) - new Date(b[value].DueDate.toDate())))
+                }
+            }
+        });
+    }
+
+    /*
+    useEffect(() => {
+        // sortArray()
+        sortArray()
+    }, [mappedArray]);
+    */
 
     return (
         <View style={styles.mainContainer}>
@@ -108,18 +166,32 @@ export default function App() {
                         searchPlaceHolderColor={'black'}
                         data={upcomingEvents}
                         onSelect={(item) => {
-                            setMappedArray([])
+                            setMappedArray([]);
+                            setSortedArray([]);
                             // Iterate Through houseItems
                             houseItems.forEach(element => {
                                 for (const [key, value] of Object.entries(element)) {
-                                    console.log('key' + value.Title)
-                                    if (value.Title == item) {
-                                        setMappedArray(mappedArray => [...mappedArray, element])
-                                        console.log('found')
-                                        setSelectedItem(item)
+                                    if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                                        element[key].forEach(subElement => {
+                                            if (subElement.Title === item) {
+                                                console.log(element)
+                                                console.log(subElement)
+                                                setMappedArray(mappedArray => [...mappedArray, element])
+                                                setSelectedItem(item)
+                                            }
+                                        });
                                     }
                                 }
                             })
+                            /*
+                            console.log("Mapped Array")
+                            console.log(mappedArray)
+                            console.log("Sorted Array")
+                            console.log(sortedArray)
+                            console.log("Test Array")
+                            console.log(testArray)
+                            */
+
                         }}
                         on
                         buttonTextAfterSelection={(selectedItem, index) => {
@@ -135,7 +207,8 @@ export default function App() {
                                 <HouseItemUP key={item.houseID}
                                     houseID={item.houseID}
                                     houseName={item.houseName}
-                                    selectedOptionDueDate={item[selectedItem]}
+                                    selectedOptionDueDate={getDate(item)}
+                                    //timeRemaining={getDateFunction(item)}
                                 >
                                 </HouseItemUP>
                             </View>
@@ -147,8 +220,9 @@ export default function App() {
     );
 }
 
+
 const styles = StyleSheet.create({
-    mainContainer:{
+    mainContainer: {
         backgroundColor: 'white',
         height: '100%',
     },
