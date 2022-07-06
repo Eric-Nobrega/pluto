@@ -131,6 +131,7 @@ export default function App() {
 
     function sortArray() {
         // iterate thru the mapped array
+        /*
         mappedArray.forEach(element => {
             for (const [key, value] of Object.entries(element)) {
                 if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
@@ -138,14 +139,58 @@ export default function App() {
                 }
             }
         });
+        */
+
+        /*
+        var originalArray = [
+        {
+            name: 'Store1',
+            inventory: [
+            { name: 'Oranges', qt: { short: 11, long: 3, med: 9 } },
+            { name: 'Mango', qt: { short: 3, long: 91, med: 3 } },
+            { name: 'Kiwi', qt: { short: 2, long: 91, med: 3 } },
+            { name: 'Papaya', qt: { short: 8, long: 91, med: 3 } }
+            ]
+        },
+        {
+            name: 'Store2',
+            inventory: [
+            { name: 'Pizza', qt: { short: 31, long: 11, med: 23 } },
+            { name: 'Burger', qt: { short: 1, long: 11, med: 23 } },
+            { name: 'IceCream', qt: { short: 111, long: 11, med: 323 } }
+            ]
+        }
+        ];
+
+        for (var i = 0; i < originalArray.length; i++) {
+        originalArray[i].inventory.sort(function(a, b) { return a.qt.short - b.qt.short; });
+        }
+
+        setSortedArray(mappedArray[i]["[object Object]"].sort((a, b) => new Date(a.DueDate.toDate()) - new Date(b.DueDate.toDate())))
+
+        */
+        //["[object Object]"]
+
+        console.log("BEFORE")
+        console.log(sortedArray)
+        //for (var i = 0; i < mappedArray.length; i++) {}
+
+        mappedArray.forEach(element => {
+            for (const [key, value] of Object.entries(element)) {
+                if (key !== "houseName" && key !== "houseID" && key !== "mortgageRepayment" && key !== "rentalIncome" && key !== "housePostCode" && key !== "profit") {
+                    setSortedArray(mappedArray.sort((a, b) => new Date(a["[object Object]"][0].DueDate.toDate()) - new Date(b["[object Object]"][0].DueDate.toDate())))
+                }
+            }
+        });
+
+        console.log("AFTER")
+        console.log(sortedArray)
+
     }
 
-    /*
     useEffect(() => {
-        // sortArray()
         sortArray()
     }, [mappedArray]);
-    */
 
     return (
         <View style={styles.mainContainer}>
@@ -208,7 +253,7 @@ export default function App() {
                                     houseID={item.houseID}
                                     houseName={item.houseName}
                                     selectedOptionDueDate={getDate(item)}
-                                    //timeRemaining={getDateFunction(item)}
+                                //timeRemaining={getDateFunction(item)}
                                 >
                                 </HouseItemUP>
                             </View>

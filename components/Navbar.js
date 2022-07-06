@@ -5,19 +5,9 @@ import { useFonts, Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '
 import { Ionicons } from '@expo/vector-icons';
 
 // Date Variables
-const dateObj = new Date();
-const month = dateObj.getUTCMonth() + 1;
-const day = dateObj.getUTCDate();
-const year = dateObj.getUTCFullYear();
-const newdate = new Date().toDateString();
+const newdate = new Date().toLocaleDateString();
 
 export default function Navbar() {
-    let [fontsLoaded] = useFonts({
-        Raleway_100Thin,
-        Raleway_400Regular,
-        Raleway_700Bold
-    });
-
     return (
         <View style={styles.navbar}>
             <View style={styles.navbarContent}>
